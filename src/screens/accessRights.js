@@ -1,5 +1,4 @@
-// AccessRights.js
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, version} from 'react';
 import {
   View,
   Button,
@@ -20,6 +19,8 @@ import {
 
 import {dataPermission} from '../common/commonData';
 import ContinuousClickPopup from '../component/continuoslyClickPopUp';
+import {color} from '../assets/color';
+import {verticalScale} from 'react-native-size-matters';
 
 const AccessRights = ({navigation}) => {
   const [cameraPermission, setCameraPermission] = useState(null);
@@ -50,7 +51,6 @@ const AccessRights = ({navigation}) => {
       Alert.alert('Showing secret dev screen!');
     });
 
-    console.log('PERMISSIONS.ANDROID 12:34 ', PERMISSIONS.ANDROID);
     let permissionsArray = Object.keys(dataPermission).map(key => {
       return {
         key: key.replace(/_/g, ' '),
@@ -110,7 +110,6 @@ const AccessRights = ({navigation}) => {
 
   useEffect(() => {
     const subscription = navigation.addListener('focus', () => {
-      // Screen was focused, re-check permissions
       checkPermissions();
     });
     return subscription;
@@ -118,49 +117,44 @@ const AccessRights = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text>Camera Permission: {cameraPermission}</Text>
-      <Text>Storage Permission: {storagePermission}</Text>
+      <View style={styles.alignPermissionData}>
+        <Text style={styles.permissionText}>Camera Permission</Text>
+        <Text style={styles.permissionResponse}>{cameraPermission}</Text>
+      </View>
 
-      <View
-        style={{
-          marginVertical: 10,
-        }}>
+      <View style={styles.alignPermissionData}>
+        <Text style={styles.permissionText}>Storage Permission</Text>
+        <Text style={styles.permissionResponse}>{storagePermission}</Text>
+      </View>
+
+      <View style={styles.marginTopStyle}>
         <Button
           title="Request Camera Permission"
           onPress={requestCameraPermission}
         />
       </View>
 
-      <View
-        style={{
-          marginVertical: 10,
-        }}>
+      <View style={styles.marginTopStyle}>
         <Button
           title="Request Read External Storage Permission"
           onPress={requestStoragePermission}
         />
       </View>
 
-      <View
-        style={{
-          marginVertical: 10,
-        }}>
+      <View style={styles.marginTopStyle}>
         <Button
           title="Request Storage Permission"
           onPress={requestStoragePermission}
         />
       </View>
 
-      <View
-        style={{
-          marginVertical: 10,
-        }}>
+      <View style={styles.marginTopStyle}>
         <Button title="Open App Settings" onPress={openAppSettings} />
       </View>
 
-      {/* <View>
-        
-      </View> */}
+      <View style={styles.listOfAccessListContainer}>
+        <Text style={styles.listOfAccessListText}>List Of Access Rights</Text>
+      </View>
       <FlatList
         data={permissionsArray}
         keyExtractor={(data, index) => index}
@@ -187,8 +181,31 @@ const AccessRights = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingHorizontal: 10,
+  },
+  listOfAccessListText: {
+    fontSize: 16,
+    color: color.spanishBlue,
+    fontWeight: 'bold',
+  },
+  listOfAccessListContainer: {
+    marginVertical: 10,
+    backgroundColor: color.white,
+    paddingLeft: 5,
+    borderRadius: 5,
+  },
+  marginTopStyle: {
+    marginVertical: 10,
+  },
+  permissionText: {fontSize: verticalScale(14), color: color.spanishBlue},
+  permissionResponse: {
+    fontSize: verticalScale(14),
+    color: '#000',
+    textTransform: 'capitalize',
+  },
+  alignPermissionData: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 

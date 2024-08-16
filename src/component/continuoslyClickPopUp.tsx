@@ -1,5 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, Text, Modal, TouchableOpacity, StyleSheet} from 'react-native';
+import {scale, verticalScale} from 'react-native-size-matters';
+import {color} from '../assets/color';
 
 interface ContinuousClickPopupProps {
   TextData: string;
@@ -32,7 +34,12 @@ const ContinuousClickPopup = (props: ContinuousClickPopupProps) => {
         onRequestClose={() => setModalVisible(false)}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalText}>{props.TextData}</Text>
+            <View>
+              <Text style={styles.modalHeaderText}>{props.keyData}</Text>
+            </View>
+            <View>
+              <Text style={styles.modalText}>{props.TextData}</Text>
+            </View>
           </View>
         </View>
       </Modal>
@@ -42,37 +49,42 @@ const ContinuousClickPopup = (props: ContinuousClickPopupProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '96%',
-    borderColor: '#000',
+    width: verticalScale(300),
+    borderColor: color.white,
     marginHorizontal: '1%',
-    height: 50,
-    marginTop: '2%',
-    borderWidth: 1,
+    height: verticalScale(50),
+    marginTop: verticalScale(5),
+    borderWidth: 3,
+    borderRadius: verticalScale(10),
+    backgroundColor: color.spanishBlue,
   },
   buttonText: {
-    color: '#CA8C2B',
-    fontSize: 14,
-    fontWeight: 'bold',
-    textTransform: 'capitalize',
+    color: color.white,
+    fontSize: verticalScale(13),
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: color.transparent,
+    marginTop: verticalScale(35),
   },
   modalContent: {
-    width: 300,
-    padding: 20,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    alignItems: 'center',
+    width: scale(330),
+    padding: verticalScale(20),
+    backgroundColor: color.spanishBlue,
+    borderRadius: verticalScale(10),
   },
   modalText: {
-    fontSize: 18,
+    fontSize: verticalScale(16),
+    color: color.white,
+    textAlign: 'center',
+  },
+  modalHeaderText: {
+    color: color.white,
+    fontSize: verticalScale(18),
+    fontWeight: 'bold',
   },
 });
 
