@@ -1,7 +1,4 @@
 # React native Access Right
-
-
-
 ## RNAccessRight is about ask user to grant permission, 
 ## list of Access Right for user in mobile phone,
 
